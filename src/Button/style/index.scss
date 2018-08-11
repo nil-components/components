@@ -1,0 +1,406 @@
+@function tint($color, $weight: 20%) {
+	@return mix(#FFF,$color, $weight);
+}
+@function shade($color, $weight: 10%) {
+	@return mix(#000,$color, $weight);
+}
+
+@mixin button-type($type,$bgColor,$color) {
+	&-#{$type} {
+		color:$color;
+		background-color: $bgColor;
+		border-color:$bgColor;
+	}
+	
+	&-#{$type}:focus,
+	&-#{$type}:hover {
+		color: $color;
+		background-color: tint( $bgColor, 15% );
+		border-color:tint( $bgColor, 15% );
+	}
+	
+	&-#{$type}.active,
+	&-#{$type}:active {
+		color: $color;
+		background-color: shade( $bgColor, 15% );
+		border-color:shade( $bgColor, 15% );
+	}
+
+	&-#{$type}.#{$btnPrefix}-disabled,
+	&-#{$type}[disabled],
+	&-#{$type}:disabled,
+	&-#{$type}.#{$btnPrefix}-disabled.active,
+	&-#{$type}.#{$btnPrefix}-disabled:active,
+	&-#{$type}.#{$btnPrefix}-disabled:hover,
+	&-#{$type}[disabled].active,
+	&-#{$type}[disabled]:active,
+	&-#{$type}[disabled]:hover {
+		background-color:$bgColor;
+		box-shadow: 0 0 0 0 rgba(0,0,0,0);
+		cursor:$disabledCursor;
+		opacity: .5;
+	}	
+}
+
+@mixin group-button-type($type,$bgColor) {
+	.#{$btnPrefix}-#{$type} {
+		border-left-color: shade($bgColor, 12%);
+		border-right-color: shade($bgColor, 12%);
+	}
+
+	.#{$btnPrefix}-#{$type}:hover {
+		border-left-color: shade($bgColor, 15%);
+		border-right-color: shade($bgColor, 15%);
+	}
+	.#{$btnPrefix}-#{$type}.active,
+	.#{$btnPrefix}-#{$type}:active {
+		border-left-color: shade($bgColor, 15%);
+		border-right-color: shade($bgColor, 15%);
+	}
+
+	.#{$btnPrefix}-#{$type}:last-child {
+		border-right-color: transparent;
+	}
+
+	.#{$btnPrefix}-#{$type}:first-child {
+		border-left-color: transparent;
+	}
+	
+}
+
+// @mixin button-ghost() {
+// 	&-ghost {
+// 		background-color: transparent;
+// 	}
+	
+// 	&-ghost:focus,
+// 	&-ghost:hover {
+// 		background-color: transparent;
+// 	}
+	
+// 	&-ghost:active {
+// 		background-color: transparent;
+// 	}
+// }
+
+// @mixin button-dashed($bgColor) {
+// 	&-dashed {
+// 		border-style:dashed;
+// 		border-color:$defaultBorderColor;
+// 		background-color: transparent;
+// 	}
+
+// 	&-dashed:focus,
+// 	&-dashed:hover {
+// 		background-color: tint( $bgColor, 50% );
+// 	}
+	
+// 	&-dashed:active {
+// 		background-color: shade( $bgColor, 1% );
+// 	}
+// }
+
+$btnPrefix: nil-btn;
+
+$height: 30px !default;
+$smallHeight: 26px !default;
+$xsmallHeight: 20px !default;
+$largeHeight: 36px !default;
+$xlargeHeight: 42px !default;
+$borderRadius: 2px !default;
+
+//按钮默认样式风格
+$defaultBorderColor: #dbdbdb;//#ccc  #B0B0B0 dbdbdb
+$defaultColor: #404040;
+$defaultBGColor: #FFF;
+
+$defaultHoverColor: #404040; //#E0E0E0 #FAFAFA 
+$defaultHoverBGColor: #FFF;//mix(#FFF,$defaultBGColor, 30%);
+$defaultHoverBorderColor: #bababa;
+
+$defaultActiveColor: #272727;
+$defaultActiveBGColor: #e3e3e3;  //#d4d4d4 #EFEFEF
+$defaultActiveBorderColor: #bababa;
+
+//dashed按钮风格
+$dashedColor: $defaultBorderColor;
+
+//按钮样式风格
+$primaryBGColor: #2572f2;// 2572f2 2d8cf0
+$dangerBGColor: #ed3f14;
+$warningBGColor: #f90;
+$successBGColor: #19be6b;
+$infoBGColor: #2db7f5;
+
+
+//disabled样式
+$disabledColor: #bbbec4;
+$disabledBGColor:#f7f7f7;
+$disabledBorderColor:#dddee1;
+$disabledCursor: default;
+
+.#{$btnPrefix} {
+    display: inline-block;
+    cursor: pointer;
+	//box-sizing: border-box;
+    white-space: nowrap;
+	text-decoration: none;
+	text-align: center;
+   // overflow: hidden;
+    position: relative;
+	margin-bottom:0;
+	height:$height;
+	padding: 0 10px;
+	touch-action:manipulation;
+	border: 1px solid transparent;
+	line-height: $height - 2;
+	font-weight:500;
+	font-size:12px;
+	color: $defaultColor;
+	position: relative;
+	user-select:none;
+	vertical-align: middle;
+	border-radius: $borderRadius;
+	transition: all .3s;
+
+	//loading mask
+	&:before {
+		position: absolute;
+		top: -1px;
+		left: -1px;
+		bottom: -1px;
+		right: -1px;
+		background: #fff;
+		opacity: .35;
+		content: "";
+		border-radius: inherit;
+		z-index: 1;
+		transition: opacity .2s;
+		pointer-events: none;
+		display: none;
+	}
+
+	&.#{$btnPrefix}-loading {
+		pointer-events: none;
+		position: relative;
+	}
+
+	&.#{$btnPrefix}-loading:before {
+		display: block;
+	}
+	
+	&,
+	&:active,
+	&:focus {
+		outline:0
+	}
+
+	&-radius {
+		border-radius: $borderRadius;
+	}
+
+	&-circle {
+		border-radius: 50%;
+	}
+
+	&-block {
+		display:block;
+		width:100%;	
+	}
+
+	&-block+&-block {
+		margin-top: 5px;
+	}
+
+	&:not(&-block)+&:not(&-block) {
+		margin-left: 5px;
+	}
+
+	&-default {
+		color: #404040;
+		background-color: #fff;
+		border-color: #dbdbdb;
+		box-shadow: 0 1px 0 rgba(0,0,0,.05);
+	}
+
+	&-default:focus,
+	&-default:hover {
+		color:$defaultHoverColor;
+		background-color:$defaultHoverBGColor;
+		border-color:$defaultHoverBorderColor;
+		box-shadow: 0 1px 0 rgba(0,0,0,.1);
+	}
+	&-default.active,
+	&-default:active{
+		color:$defaultActiveColor;
+		background-color:$defaultActiveBGColor;
+		border-color:$defaultActiveBorderColor;
+		box-shadow: inset 0 2px 0 rgba(0,0,0,.06);
+	}
+
+	//默认disabled样式
+	&-default.#{$btnPrefix}-disabled,
+	&-default[disabled],
+	&-default:disabled,
+	&-default.#{$btnPrefix}-disabled.active,
+	&-default.#{$btnPrefix}-disabled:active,
+	&-default.#{$btnPrefix}-disabled:hover,
+	&-default[disabled].active,
+	&-default[disabled]:active,
+	&-default[disabled]:hover {
+		color:$disabledColor;
+		background-color:$disabledBGColor;
+		border-color:$disabledBorderColor;
+		box-shadow: 0 0 0 0 rgba(0,0,0,0);
+		cursor:$disabledCursor;
+	}
+
+	&-disabled > *,
+	&[disabled] > * {
+		pointer-events:none
+	}	
+
+	&-xsmall {
+		height:$xsmallHeight;
+		line-height:$xsmallHeight - 2;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+	&-small {
+		height:$smallHeight;
+		line-height:$smallHeight - 2;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+
+	&-medium {
+		height:$height;
+		line-height:$height - 2;
+	}
+
+	&-large {
+		height:$largeHeight;
+		line-height:$largeHeight - 2;
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	&-xlarge {
+		height:$xlargeHeight;
+		line-height:$xlargeHeight - 2;
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	@include button-type(primary, $primaryBGColor, #FFF);
+	@include button-type(danger, $dangerBGColor, #FFF);
+	@include button-type(success, $successBGColor, #FFF);
+	@include button-type(warning, $warningBGColor, #FFF);
+	@include button-type(info, $infoBGColor, #FFF);
+	// @include button-dashed($defaultBGColor);
+	// @include button-ghost();
+
+		//通用disabled样式
+		// .nil-btn.nil-btn-disabled,
+		// .nil-btn[disabled],
+		// .nil-btn:disabled,
+		// .nil-btn-disabled:active,
+		// .nil-btn-disabled:hover,
+		// .nil-btn[disabled]:active,
+		// .nil-btn[disabled]:hover {
+		// 	color:$disabledColor;
+		// 	background-color:$disabledBGColor;
+		// 	border-color:$disabledBorderColor;
+		// 	cursor:$disabledCursor;
+		// }	
+	
+	&.#{$btnPrefix}-icon-only {
+		width: $height;
+		padding: 0;
+	}
+
+	&.#{$btnPrefix}-xsmall.#{$btnPrefix}-icon-only {
+		width: $xsmallHeight;
+		padding: 0;
+	}
+
+	&.#{$btnPrefix}-small.#{$btnPrefix}-icon-only {
+		width: $smallHeight;
+		padding: 0;
+	}
+
+	&.#{$btnPrefix}-large.#{$btnPrefix}-icon-only {
+		width: $largeHeight;
+		padding: 0;
+	}
+
+	&.#{$btnPrefix}-xlarge.#{$btnPrefix}-icon-only {
+		width: $xlargeHeight;
+		padding: 0;
+	}
+	
+	&-text {
+		display: inline-block;
+	}
+	> .nil-icon+.#{$btnPrefix}-text, 
+	> .#{$btnPrefix}-text+.nil-icon{
+		margin-left: 6px;
+	}
+
+	&-group {
+		position:relative;
+		display:inline-block;
+
+		> .#{$btnPrefix} {
+			position: relative;
+			display:inline-block;
+			line-height: $height - 2;
+		
+			&:hover,
+			&:focus,
+			&.active,
+			&:active {
+			  z-index: 2;
+			}
+		
+			&:disabled {
+			  z-index: 0;
+			}	
+		}
+
+		.#{$btnPrefix}:not(.#{$btnPrefix}-block)+.#{$btnPrefix}:not(.#{$btnPrefix}-block) {
+			margin-left:-1px
+		}
+
+		>.#{$btnPrefix}:first-child {
+			margin-left:0
+		}
+
+		.#{$btnPrefix}:not(:first-child):not(:last-child) {
+			border-radius:0;
+		}
+
+		>.#{$btnPrefix}:first-child:not(:last-child) {
+			border-bottom-right-radius:0;
+			border-top-right-radius:0;
+		}
+
+		>.#{$btnPrefix}:last-child:not(:first-child) {
+			border-bottom-left-radius:0;
+			border-top-left-radius:0;
+		}
+
+		@include group-button-type(primary, $primaryBGColor);
+		@include group-button-type(danger, $dangerBGColor);
+		@include group-button-type(success, $successBGColor);
+		@include group-button-type(warning, $warningBGColor);
+		@include group-button-type(info, $infoBGColor);
+
+
+		& + & {
+			margin-left: 5px;
+		}
+
+	}
+}

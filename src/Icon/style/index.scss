@@ -1,0 +1,29 @@
+@import "./iconfont/iconfont.css";
+  
+  .nil-icon {
+	  font-size: inherit;
+	font-style:normal;
+	//display: inline-block;
+	//vertical-align: middle;
+	//line-height: 1;
+	text-align: center;
+	text-transform: none;
+  }
+  
+  .nil-icon-loading:before { content: "\e648"; }
+  
+  .nil-icon-search:before { content: "\e7e3"; }
+  
+  .nil-icon-spin:before {
+	  display: inline-block;
+	animation: loading-circle 1s infinite linear;
+  }
+
+  @keyframes loading-circle {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+  }

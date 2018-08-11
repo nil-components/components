@@ -11,47 +11,19 @@ const EXAMPLE_DIST_DIR = path.resolve(CWD, 'examples-dist');
 const EXAMPLE_HTML_TEMPLATE = 'index.html';
 
 async function buildExample(entryJs) {
-    return new Promise(async (resolve, reject) => {
-        const cfg = {
-            mode: 'development',
-            appSrc: EXAMPLE_SRC_DIR,
-            distSrc: EXAMPLE_DIST_DIR,
-            appEntryJs: entryJs,
-            appEntryHtml: EXAMPLE_HTML_TEMPLATE,
-            appEntryHtmlOpts: {
-                title: entryJs.replace(/\.jsx?$/, ''),
-                filename: entryJs.replace(/jsx?$/, 'html'),
-            },
-        };
+    const cfg = {
+        mode: 'development',
+        appSrc: EXAMPLE_SRC_DIR,
+        appDist: EXAMPLE_DIST_DIR,
+        appEntryJs: entryJs,
+        appEntryHtml: EXAMPLE_HTML_TEMPLATE,
+        appEntryHtmlOpts: {
+            title: entryJs.replace(/\.jsx?$/, ''),
+            filename: entryJs.replace(/jsx?$/, 'html'),
+        },
+    };
 
-        const webpackConfig = await initWebpackConfig(cfg);
-
-        const compiler = webpack(webpackConfig);
-
-        const compilerCb = function (err, stats) {
-            if (err) {
-                reject();
-                return console.log(err);
-            }
-
-            if (stats.hasErrors()) {
-                console.log(stats.toString({
-                    chunks: false,
-                    colors: true,
-                }));
-                console.log('示例构建失败：%s', entryJs);
-                reject();
-            } else {
-                console.log('示例构建完成：%s', entryJs);
-            }
-
-            resolve()
-
-        }
-
-        compiler.run(compilerCb);
-
-    });
+    return await initWebpackConfig(cfg);
 }
 
 fs.readdir(EXAMPLE_SRC_DIR, async (err, files) => {
@@ -60,13 +32,34 @@ fs.readdir(EXAMPLE_SRC_DIR, async (err, files) => {
         return;
     }
 
+    fs.emptyDirSync(EXAMPLE_DIST_DIR);
+
+    const webpackConfig = [];
     for (let file of files) {
         const absFilePath = path.resolve(EXAMPLE_SRC_DIR, file);
         const stats = fs.statSync(absFilePath);
 
-        if (!stats.isFile() || !/\.jsx?$/.test(file)) return;
+        if (!stats.isFile() || !/\.jsx?$/.test(file)) continue;
 
-        await buildExample(file);
+        webpackConfig.push(await buildExample(file));
     }
+
+    const compiler = webpack(webpackConfig);
+
+    const compilerCb = function (err, stats) {
+        if (err) {
+            return console.log(err);
+        }
+
+        console.log(stats.toString({
+            chunks: false,
+            colors: true,
+        }));
+    }
+
+    compiler.watch({
+        aggregateTimeout: 300,
+        poll: undefined
+    }, compilerCb);
 
 });

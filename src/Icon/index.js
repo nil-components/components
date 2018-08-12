@@ -17,6 +17,14 @@ export default class Icon extends Component {
 
     render() {
         const { prefixCls, type, spin, className, ...other } = this.props;
-        return <i {...other} className={classNames(prefixCls, `${prefixCls}-${type}`, className, { [`${prefixCls}-spin`]: spin })} />;
+        return <i
+            {...other}
+            className={classNames(
+                prefixCls,
+                `${prefixCls}-${type}`,
+                className,
+                { [`${prefixCls}-spin`]: spin }
+            )}
+        />;
     }
 }

@@ -59,7 +59,8 @@ fs.readdir(EXAMPLE_SRC_DIR, async (err, files) => {
 
     compiler.watch({
         aggregateTimeout: 300,
-        poll: undefined
+        poll: undefined,
+        ignored: /node_modules/
     }, compilerCb);
 
 });

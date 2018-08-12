@@ -54,8 +54,8 @@
 	}
 	.#{$btnPrefix}-#{$type}.active,
 	.#{$btnPrefix}-#{$type}:active {
-		border-left-color: shade($bgColor, 15%);
-		border-right-color: shade($bgColor, 15%);
+		border-left-color: shade($bgColor, 30%);
+		border-right-color: shade($bgColor, 30%);
 	}
 
 	.#{$btnPrefix}-#{$type}:last-child {
@@ -115,7 +115,7 @@ $defaultColor: #404040;
 $defaultBGColor: #FFF;
 
 $defaultHoverColor: #404040; //#E0E0E0 #FAFAFA 
-$defaultHoverBGColor: #FFF;//mix(#FFF,$defaultBGColor, 30%);
+$defaultHoverBGColor: #F7F7FA;//mix(#FFF,$defaultBGColor, 30%); F7F7FA fbfbfb
 $defaultHoverBorderColor: #bababa;
 
 $defaultActiveColor: #272727;

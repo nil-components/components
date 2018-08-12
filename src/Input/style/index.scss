@@ -1,0 +1,218 @@
+@mixin placeholder($color:$inputPlaceholderColor) {
+	// Firefox
+	&::-moz-placeholder {
+	  color: $color;
+	  opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+	}
+	// Internet Explorer 10+
+	&:-ms-input-placeholder {
+	  color: $color;
+	}
+	// Safari and Chrome
+	&::-webkit-input-placeholder {
+	  color: $color;
+	}
+  }
+
+$inputHeight: 30px !default;
+$inputXSmallHeight: 20px !default;
+$inputSmallHeight: 26px !default;
+$inputLargeHeight: 36px !default;
+$inputFontSize: 12px;
+
+$inputBorderRadius: 1px !default;
+$inputColor: rgba(0,0,0,.8) !default;
+$inputBGColor: #FFF !default;
+$inputBorderColor: #c0c0c0 #d9d9d9 #d9d9d9 !default;
+$inputPlaceholderColor: #ccc !default;
+$inputHoverBorderColor: #a0a0a0 #b9b9b9 #b9b9b9 !default;
+$inputFocusBorderColor: #3892d3;
+
+$inputPrefix: nil-input;
+
+
+input[type="text"]::-ms-clear{
+    display:none;
+}
+
+.#{$inputPrefix} {
+	position:relative;
+	display:block;
+	padding:0 7px;
+	width:100%;
+	height:$inputHeight;
+	line-height:$inputHeight - 2;
+	cursor:text;
+	font-size:$inputFontSize;
+	color:$inputColor;
+	background-color:#fff;
+	background-image:none;
+	border-radius:$inputBorderRadius;
+	//transition:all .3s;
+	
+	border-width: 1px;
+    border-style: solid;
+	border-color: $inputBorderColor;
+	
+	@include placeholder($inputPlaceholderColor);
+
+	&:focus {
+		outline:0;
+	}
+
+	&:hover:not([disabled]) {
+		border-color:$inputHoverBorderColor;
+	}
+
+	&:focus:not([disabled]) {
+		border-color:$inputFocusBorderColor;
+	}
+
+	&[disabled] {
+		opacity: .5;
+		cursor:default;
+	}
+	
+	&-xsmall {
+		height:$inputXSmallHeight;
+		line-height:$inputXSmallHeight - 2;
+	}
+
+	&-small {
+		height:$inputSmallHeight;
+		line-height:$inputSmallHeight - 2;
+	}
+
+	&-large {
+		height:$inputLargeHeight;
+		line-height:$inputLargeHeight - 2;
+	}
+	
+	@at-root {
+		textarea.#{$inputPrefix} {
+			min-height: 60px;
+			padding: 5px 7px;
+			line-height: 1.42857143;
+			resize: none;
+		}
+	}
+}
+
+
+
+// .nex-input[disabled]:hover {
+// 	border-color: $inputBorderColor;
+// }
+textarea.nex-input {
+	min-width: 80px;
+	width:100%;
+	height:100%;
+	vertical-align:bottom;
+}
+
+
+.nex-input-wrapper {
+	position:relative;
+	display: inline-block;
+	width:100%;
+	vertical-align:middle;
+
+	textarea{
+		resize: none;
+	}
+
+	textarea.nex-input-autosize {
+		resize: both;
+	}
+	
+	&.nex-input-wrapper-block {
+		display: block;
+	}
+	
+	&:hover .nex-input {
+		border-color:$inputHoverBorderColor;
+	}
+	
+	.nex-input-prefix,
+	.nex-input-suffix {
+		position:absolute;
+		top:50%;
+		transform: translateY(-50%);
+		z-index:2;
+	}
+	
+	.nex-input-prefix {
+		left:7px;	
+	}
+	
+	.nex-input-suffix {
+		right:7px;	
+	}
+	
+	.nex-input:not(:last-child) {
+		padding-right: 24px;
+		z-index:1;
+	}
+
+	.nex-input:not(:first-child) {
+		padding-left: 24px;
+		z-index:1;
+	}
+}
+
+.nex-input-group {
+	position:relative;
+	display:inline-block;
+	width:100%;
+	
+	>* {
+		position:relative;
+		display:inline-block;
+		vertical-align:middle;
+		float:none;
+		z-index:1;
+		width:auto;
+	}
+	
+	>*:focus,
+	>*:hover {
+		z-index:2
+	}
+	
+	>*:not(:first-child) {
+		margin-left:-1px
+	}
+	
+	>*:not(:first-child):not(:last-child) .nex-input {
+		border-radius:0;
+	}
+	
+	>*:first-child {
+		margin-left:0
+	}
+	
+	>*:first-child:not(:last-child) .nex-input {
+		border-bottom-right-radius:0;
+		border-top-right-radius:0;
+	}
+	>*:last-child:not(:first-child) .nex-input {
+		border-bottom-left-radius:0;
+		border-top-left-radius:0;
+	}
+}
+
+.nex-input-group-lg {
+	.nex-input {
+		padding:0 7px;
+		height: $inputLargeHeight;
+		line-height: $inputLargeHeight - 2;
+	}	
+}
+
+.nex-input-group-sm {
+	.nex-input {
+		padding:0 7px;
+		height:$inputSmallHeight;
+		line-height: $inputSmallHeight - 2;
+	}	
+}

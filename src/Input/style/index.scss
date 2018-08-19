@@ -96,74 +96,49 @@ input[type="text"]::-ms-clear{
 			resize: none;
 		}
 	}
+
+	&-group {
+		position:relative;
+		display: table;
+		width:100%;
+		border-collapse: separate;
+		line-height: 1.5;
+
+		> * {
+			display: table-cell;
+		}
+
+		&-addon {
+			padding: 0 11px;
+			font-size: $inputFontSize;
+			font-weight: normal;
+			line-height: 1;
+			color: rgba(0, 0, 0, 0.65);
+			text-align: center;
+			background-color: #fafafa;
+			border: 1px solid #d9d9d9;
+			border-radius: $inputBorderColor;
+			position: relative;
+			-webkit-transition: all .3s;
+			transition: all .3s;
+
+			width: 1px;
+			white-space: nowrap;
+			vertical-align: middle;
+		}
+	}
 }
 
 
-
-// .nex-input[disabled]:hover {
-// 	border-color: $inputBorderColor;
-// }
-textarea.nex-input {
-	min-width: 80px;
-	width:100%;
-	height:100%;
-	vertical-align:bottom;
-}
-
-
-.nex-input-wrapper {
-	position:relative;
-	display: inline-block;
-	width:100%;
-	vertical-align:middle;
-
-	textarea{
-		resize: none;
-	}
-
-	textarea.nex-input-autosize {
-		resize: both;
-	}
-	
-	&.nex-input-wrapper-block {
-		display: block;
-	}
-	
-	&:hover .nex-input {
-		border-color:$inputHoverBorderColor;
-	}
-	
-	.nex-input-prefix,
-	.nex-input-suffix {
-		position:absolute;
-		top:50%;
-		transform: translateY(-50%);
-		z-index:2;
-	}
-	
-	.nex-input-prefix {
-		left:7px;	
-	}
-	
-	.nex-input-suffix {
-		right:7px;	
-	}
-	
-	.nex-input:not(:last-child) {
-		padding-right: 24px;
-		z-index:1;
-	}
-
-	.nex-input:not(:first-child) {
-		padding-left: 24px;
-		z-index:1;
-	}
-}
 
 .nex-input-group {
 	position:relative;
 	display:inline-block;
 	width:100%;
+
+	> #{$inputPrefix} {
+
+	}
 	
 	>* {
 		position:relative;

@@ -1,0 +1,38 @@
+
+$prefixCls: nil-table;
+$cellFontSize: 12px;
+
+.#{$prefixCls} {
+	position: relative;
+
+	.#{$prefixCls}-el {
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: separate;
+
+		.#{$prefixCls}-cell {
+			font-size: $cellFontSize;
+			border-bottom: 1px solid #EDEDED;
+			text-align: left;
+
+			>.nil-table-cell-inner {
+				padding: 4px;
+				line-height: 22px;
+			}
+		}
+
+		.nil-table-thead-cell {
+			background-color: #F5F5F5;
+			border-right: 1px solid #C0C0C0;
+			border-color: #C0C0C0;
+			font-weight: 400;
+		}
+
+		.#{$prefixCls}-cell-nowrap {
+			overflow: hidden;
+			white-space: nowrap;
+			word-wrap: normal;
+			text-overflow: ellipsis;
+		}
+	}
+}

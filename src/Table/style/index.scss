@@ -18,6 +18,8 @@ $cellFontSize: 12px;
 			>.nil-table-cell-inner {
 				padding: 4px;
 				line-height: 22px;
+				word-wrap: break-word;
+				word-break: break-all;
 			}
 		}
 

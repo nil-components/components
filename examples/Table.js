@@ -7,7 +7,7 @@ import Table from '../src/Table';
 const columns = [
     {
         title: 'T1',
-        field: 'afa',
+        field: 'T1',
         width: 400,
         id: 1
     },
@@ -17,7 +17,7 @@ const columns = [
         children: [
             { id: 5, title: 'T5', width: 100, },
             {
-                id: 6, title: 'T6', children: [
+                id: 6, title: 'T6666666666666666444444446666666666666666666666', children: [
                     { id: 8, title: 'T8', width: 100, },
                     { id: 9, title: 'T9', width: 100, },
                     { id: 10, title: 'T10', width: 100, },

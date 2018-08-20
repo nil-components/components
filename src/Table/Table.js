@@ -21,6 +21,9 @@ export default class Table extends React.Component {
         showHeader: PropTypes.bool,
         //无数据提示内容
         emptyText: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+
+        headerNowrap: true,
+        nowrap: true,
     }
 
     static defaultProps = {
@@ -30,6 +33,8 @@ export default class Table extends React.Component {
         fixedHeader: false,
         showHeader: true,
         emptyText: 'No Data',
+        headerNowrap: true,
+        nowrap: true,
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -52,7 +57,7 @@ export default class Table extends React.Component {
 
     render() {
         const { columnsStore } = this.state;
-        const { data } = this.props;
+        const { data, headerNowrap, nowrap } = this.props;
 
         return (
             <div className="nil-table">
@@ -60,8 +65,8 @@ export default class Table extends React.Component {
                     <div className="nil-table-dataview-body">
                         <table className="nil-table-el" cellSpacing={0} cellPadding={0} border={0}>
                             <Colgroup columnsStore={columnsStore} />
-                            <Thead columnsStore={columnsStore} />
-                            <Tbody columnsStore={columnsStore} data={data} />
+                            <Thead columnsStore={columnsStore} headerNowrap={headerNowrap} />
+                            <Tbody columnsStore={columnsStore} nowrap={nowrap} data={data} />
                         </table>
                     </div>
                 </div>

@@ -6,10 +6,10 @@ import classNames from 'classnames';
 export default class Colgroup extends React.Component {
 
     render() {
-        const { columnsStore } = this.props;
+        const { columnsStore, headerNowrap } = this.props;
 
         const rows = tableMultipleHeader(columnsStore);
-       
+
         return (
             <thead className="nil-table-thead-el">
                 {
@@ -25,8 +25,14 @@ export default class Colgroup extends React.Component {
                                             'nil-table-thead-cell': true,
                                             'nil-table-cell-leaf': columnsStore.isLeaf(cell.id)
                                         });
+
+                                        const innerCls = classNames({
+                                            'nil-table-cell-inner': true,
+                                            'nil-table-cell-nowrap': headerNowrap
+                                        });
+
                                         return <th className={thCls} {...cell}>
-                                            <div className="nil-table-cell-inner">{node.title}</div>
+                                            <div className={innerCls}>{node.title}</div>
                                         </th>
                                     })
                                 }
